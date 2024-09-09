@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, UseGuards} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
+import {JwtAuthGuard} from "../../../security/authentication/guards/jwt.guard";
+import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
+import {AuthChangePasswordDTO} from "../../../security/authentication/interfaces/authChangePassword.entity";
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -25,6 +28,8 @@ export class UserController {
     }
   }
   @Get()
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   async findAll() {
     try {
       const data = await this.userService.findAll();
@@ -42,14 +47,24 @@ export class UserController {
     }
   }
   @Get(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   async findOne(@Param('id') id: string) {
     try {
-      const data = await this.userService.findOne(parseInt(id));
-      return {
-        message: 'Usuario encontrado',
-        data: data,
-        success: true,
-      };
+      const data = await this.userService.findByNIde(id);
+      if (data){
+        return {
+          message: 'Usuario encontrado',
+          data: data,
+          success: true,
+        };
+      }else{
+        return {
+          message: 'No se encontró el usuario',
+          data: data,
+          success: true,
+        };
+      }
     }catch (error){
       return {
         message: 'Error al obtener el usuario',
@@ -59,13 +74,15 @@ export class UserController {
     }
   }
   @Patch(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   async update(
       @Param('id') id: string,
       @Body() updateUserDto: UpdateUserDto,
   ) {
     try {
       await this.userService.update(
-          +id,
+          id,
           updateUserDto,
       );
       return {
@@ -80,9 +97,11 @@ export class UserController {
     }
   }
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   async remove(@Param('id') id: string) {
     try {
-      await this.userService.remove(+id);
+      await this.userService.remove(id);
       return {
         success: true,
         message: 'UserEntity Deleted Successfully',

@@ -1,11 +1,7 @@
-import {
-    IsEmail, IsEnum,
-    IsNotEmpty,
-    IsString,
-} from 'class-validator';
 import {ApiProperty} from "@nestjs/swagger";
-// create-user-dto
-export class CreateUserDto {
+import {IsEmail, IsEnum, IsNotEmpty, IsString} from "class-validator";
+
+export class AuthRegisterDto {
     @ApiProperty({
         description: 'Nombre completo del usuario',
         example: 'Juan Perez',
@@ -29,6 +25,7 @@ export class CreateUserDto {
     @IsNotEmpty()
     @IsString()
     n_identificacion: string;
+
     @ApiProperty({
         description: 'Área a la que pertenece el usuario',
         example: 'Recursos Humanos',

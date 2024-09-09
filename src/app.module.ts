@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './planeacion/contratos/user/user.module';
 import {UserEntity} from "./planeacion/contratos/user/entities/user.entity";
+import {AuthenticationModule} from "./security/authentication/authentication.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -22,7 +23,8 @@ import {UserEntity} from "./planeacion/contratos/user/entities/user.entity";
       synchronize: true,
       logging: true,
     }),
-    UserModule
+    UserModule,
+    AuthenticationModule
   ],
   controllers: [AppController],
   providers: [AppService],
