@@ -5,7 +5,6 @@ import {
 } from 'typeorm';
 import {ApiProperty} from "@nestjs/swagger";
 import {IsNotEmpty, IsString} from "class-validator";
-import {Exclude} from "class-transformer";
 
 @Entity()
 export class UserEntity {
@@ -79,4 +78,9 @@ export class UserEntity {
         default: () => 'CURRENT_TIMESTAMP',
     })
     fecha_creacion: Date;
+    @ApiProperty({
+        description: 'Menu del usuario',
+    })
+    @Column({ type: 'json',nullable: true})
+    menu: any;
 }

@@ -25,7 +25,7 @@ import {UserService} from "../../planeacion/contratos/user/user.service";
             useExisting: undefined,
             useFactory: async () => ({
                 secret: process.env['JWT_SECRET'],
-                signOptions: { expiresIn: '2h' },
+                signOptions: { expiresIn: process.env['EXPIRATION_TIME'] },
             })
         }),
     ],

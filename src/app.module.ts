@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './planeacion/contratos/user/user.module';
 import {UserEntity} from "./planeacion/contratos/user/entities/user.entity";
 import {AuthenticationModule} from "./security/authentication/authentication.module";
+import { MenuModule } from './shared/menu/menu.module';
+import {MenuEntity} from "./shared/menu/entities/menu.entity";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,12 +21,13 @@ import {AuthenticationModule} from "./security/authentication/authentication.mod
       username : process.env.POSTGRES_USER,
       password : process.env.POSTGRES_PASSWORD,
       database : process.env.POSTGRES_DB,
-      entities: [UserEntity],
+      entities: [UserEntity,MenuEntity],
       synchronize: true,
       logging: true,
     }),
     UserModule,
-    AuthenticationModule
+    AuthenticationModule,
+    MenuModule
   ],
   controllers: [AppController],
   providers: [AppService],

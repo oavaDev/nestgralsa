@@ -33,6 +33,7 @@ export class AuthenticationService {
                 username: user.usuario,
             });
             return {
+                user,
                 access_token: token,
             };
         } else {
