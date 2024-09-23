@@ -2,9 +2,12 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
+    OneToMany
 } from 'typeorm';
 import {ApiProperty} from "@nestjs/swagger";
 import {IsNotEmpty, IsString} from "class-validator";
+import {UserRoleEntity} from "../../user-role/entities/user-role.entity";
+import {JoinColumn} from "typeorm/browser";
 
 @Entity()
 export class UserEntity {
@@ -38,35 +41,11 @@ export class UserEntity {
     @Column()
     n_identificacion: string;
     @ApiProperty({
-        description: 'Área a la que pertenece el usuario',
-        example: 'Recursos Humanos',
-    })
-    @Column()
-    area: string;
-    @ApiProperty({
-        description: 'Subárea a la que pertenece el usuario',
-        example: 'Contratación',
-    })
-    @Column()
-    subarea: string;
-    @ApiProperty({
-        description: 'Rol del usuario en la organización',
-        example: 'Administrador',
-    })
-    @Column()
-    rol: string;
-    @ApiProperty({
         description: 'Correo electrónico único del usuario',
         example: 'example@mail.com',
     })
     @Column({ unique: true })
     email: string;
-    @ApiProperty({
-        description: 'Aplicación a la que pertenece el usuario',
-        example: 'Contratos',
-    })
-    @Column()
-    aplicacion: string;
     @ApiProperty({
         description: 'Estado del usuario',
         example: 'A',
@@ -81,6 +60,6 @@ export class UserEntity {
     @ApiProperty({
         description: 'Menu del usuario',
     })
-    @Column({ type: 'json',nullable: true})
-    menu: any;
+    @OneToMany(() => UserRoleEntity, userRole => userRole.user)
+    roles: UserRoleEntity[];
 }

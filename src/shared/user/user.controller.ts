@@ -1,32 +1,14 @@
 import {Controller, Get, Post, Body, Patch, Param, Delete, UseGuards} from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import {JwtAuthGuard} from "../../../security/authentication/guards/jwt.guard";
+import {JwtAuthGuard} from "../../security/authentication/guards/jwt.guard"
 import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
-import {AuthChangePasswordDTO} from "../../../security/authentication/interfaces/authChangePassword.entity";
+import {AuthChangePasswordDTO} from "../../security/authentication/interfaces/authChangePassword.entity";
 @ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  async create(@Body() createUserDto: CreateUserDto) {
-    try {
-      await this.userService.create(createUserDto);
-      return {
-        message: 'Usuario creado correctamente',
-        data: createUserDto,
-        success: true,
-      };
-      }catch (error){
-        return {
-          message: 'Error al crear el usuario',
-          error: error.message,
-          success: false,
-        };
-    }
-  }
   @Get()
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
@@ -73,7 +55,7 @@ export class UserController {
       }
     }
   }
-  @Patch(':id')
+/*  @Patch(':id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   async update(
@@ -87,7 +69,7 @@ export class UserController {
       );
       return {
         success: true,
-        message: 'UserEntity Updated Successfully',
+        message: 'UserRoleEntity Updated Successfully',
       };
     } catch (error) {
       return {
@@ -104,7 +86,7 @@ export class UserController {
       await this.userService.remove(id);
       return {
         success: true,
-        message: 'UserEntity Deleted Successfully',
+        message: 'UserRoleEntity Deleted Successfully',
       };
     } catch (error) {
       return {
@@ -112,5 +94,5 @@ export class UserController {
         message: error.message,
       };
     }
-  }
+  }*/
 }

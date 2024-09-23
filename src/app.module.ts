@@ -1,13 +1,19 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './planeacion/contratos/user/user.module';
-import {UserEntity} from "./planeacion/contratos/user/entities/user.entity";
+import { UserModule } from './shared/user/user.module';
+import {UserEntity} from "./shared/user/entities/user.entity";
 import {AuthenticationModule} from "./security/authentication/authentication.module";
-import { MenuModule } from './shared/menu/menu.module';
-import {MenuEntity} from "./shared/menu/entities/menu.entity";
+import { UserRoleModule } from './shared/user-role/user-role.module';
+import { RoleModule } from './shared/role/role.module';
+import { AreaModule } from './shared/area/area.module';
+import { SubareaModule } from './shared/subarea/subarea.module';
+import { AplicationModule } from './shared/aplication/aplication.module';
+import {AplicationEntity} from "./shared/aplication/entities/aplication.entity";
+import {SubareaEntity} from "./shared/subarea/entities/subarea.entity";
+import {AreaEntity} from "./shared/area/entities/area.entity";
+import {RoleEntity} from "./shared/role/entities/role.entity";
+import {UserRoleEntity} from "./shared/user-role/entities/user-role.entity";
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -21,15 +27,19 @@ import {MenuEntity} from "./shared/menu/entities/menu.entity";
       username : process.env.POSTGRES_USER,
       password : process.env.POSTGRES_PASSWORD,
       database : process.env.POSTGRES_DB,
-      entities: [UserEntity,MenuEntity],
+      entities: [UserEntity, UserRoleEntity, RoleEntity, AreaEntity, SubareaEntity, AplicationEntity],
       synchronize: true,
       logging: true,
     }),
     UserModule,
     AuthenticationModule,
-    MenuModule
+    UserRoleModule,
+    RoleModule,
+    AreaModule,
+    SubareaModule,
+    AplicationModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

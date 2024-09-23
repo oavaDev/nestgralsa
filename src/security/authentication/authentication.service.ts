@@ -7,8 +7,8 @@ import { AuthLoginDto } from './interfaces/authLoginDto.entity';
 import { JwtService } from '@nestjs/jwt';
 import { AuthRegisterDto } from './interfaces/authRegisterDto.entity';
 import {InjectRepository} from "@nestjs/typeorm";
-import {UserEntity} from "../../planeacion/contratos/user/entities/user.entity";
-import {UserService} from "../../planeacion/contratos/user/user.service";
+import {UserEntity} from "../../shared/user/entities/user.entity";
+import {UserService} from "../../shared/user/user.service";
 import {AuthChangePasswordDTO} from "./interfaces/authChangePassword.entity";
 
 @Injectable()
@@ -46,9 +46,9 @@ export class AuthenticationService {
             throw new Error('User not found');
         }
         const userChangingPassword = await this.userService.findByNIde(authChangePasswordDTO.idUser);
-        if (userChangingPassword.rol !== 'Administrador') {
+/*        if (userChangingPassword.roles !== 'Administrador') {
             throw new Error('Unauthorized');
-        }
+        }*/
         user.password = await generateHashedPassword(authChangePasswordDTO.password);
         return await this.userService.changePassword(authChangePasswordDTO.id, user.password);
     }
@@ -57,7 +57,9 @@ export class AuthenticationService {
         if (existingUser) {
             return 'User already exists';
         }
+        console.log(user)
         user.password = await generateHashedPassword(user.password);
+        console.log(user.password)
         return await this.userService.create(user);
     }
 

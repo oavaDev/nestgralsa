@@ -6,10 +6,10 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import * as process from "process";
-import {UserModule} from "../../planeacion/contratos/user/user.module";
+import {UserModule} from "../../shared/user/user.module";
 import {TypeOrmModule} from "@nestjs/typeorm";
-import {UserEntity} from "../../planeacion/contratos/user/entities/user.entity";
-import {UserService} from "../../planeacion/contratos/user/user.service";
+import {UserEntity} from "../../shared/user/entities/user.entity";
+import {UserService} from "../../shared/user/user.service";
 
 @Module({
     imports: [
