@@ -20,4 +20,10 @@ export class AuthChangePasswordDTO {
     })
     @IsNotEmpty()
     password: string;
+    @ApiProperty({
+        description: 'Id de aplicacion',
+        example: '1',
+    })
+    @IsNotEmpty()
+    applicationId: number;
 }

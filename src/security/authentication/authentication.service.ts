@@ -46,9 +46,18 @@ export class AuthenticationService {
             throw new Error('User not found');
         }
         const userChangingPassword = await this.userService.findByNIde(authChangePasswordDTO.idUser);
-/*        if (userChangingPassword.roles !== 'Administrador') {
-            throw new Error('Unauthorized');
-        }*/
+        let roles = userChangingPassword.roles;
+        for (let role of roles) {
+            if (role.role.aplicacion.id === authChangePasswordDTO.applicationId && role.role.descripcion === 'ADMINISTRADOR') {
+                console.log('ADMINISTRADOR role found');
+                break;
+            } else {
+                throw new Error('Unauthorized');
+            }
+        }
+        /* if (userChangingPassword.roles !== 'Administrador') {
+              throw new Error('Unauthorized');
+          }*/
         user.password = await generateHashedPassword(authChangePasswordDTO.password);
         return await this.userService.changePassword(authChangePasswordDTO.id, user.password);
     }

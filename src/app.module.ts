@@ -14,10 +14,12 @@ import {SubareaEntity} from "./shared/subarea/entities/subarea.entity";
 import {AreaEntity} from "./shared/area/entities/area.entity";
 import {RoleEntity} from "./shared/role/entities/role.entity";
 import {UserRoleEntity} from "./shared/user-role/entities/user-role.entity";
+
+const ENV = process.env.NODE_ENV;
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env',
+      envFilePath: ENV ? 'env/.env.development': 'env/.env',
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({

@@ -51,8 +51,10 @@ export class UserService {
     return userData;
   }
   async findByNIde(id: string): Promise<UserEntity> {
-    const userData = this.userRepository.findOne({where: {n_identificacion: id}})
-    if (!userData){
+    const userData = this.userRepository.findOne({
+      where: { n_identificacion: id },
+      relations: ['roles', 'roles.role', 'roles.role.aplicacion', 'roles.role.subarea', 'roles.role.subarea.area']
+    }); if (!userData){
       throw new HttpException('Usuario no encontrado', 404);
     }
     return userData;
