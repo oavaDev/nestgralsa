@@ -14,6 +14,10 @@ import {SubareaEntity} from "./shared/subarea/entities/subarea.entity";
 import {AreaEntity} from "./shared/area/entities/area.entity";
 import {RoleEntity} from "./shared/role/entities/role.entity";
 import {UserRoleEntity} from "./shared/user-role/entities/user-role.entity";
+import { CurencyModule } from './planning/contracts/curency/curency.module';
+import {CurrencyEntity} from "./planning/contracts/curency/entities/currency.entity";
+import {DocumentTypeEntity} from "./planning/contracts/document_type/entities/document-type.entity";
+import {DocumentTypeModule} from "./planning/contracts/document_type/document-type.module";
 
 const ENV = process.env.NODE_ENV;
 @Module({
@@ -29,7 +33,7 @@ const ENV = process.env.NODE_ENV;
       username : process.env.POSTGRES_USER,
       password : process.env.POSTGRES_PASSWORD,
       database : process.env.POSTGRES_DB,
-      entities: [UserEntity, UserRoleEntity, RoleEntity, AreaEntity, SubareaEntity, AplicationEntity],
+      entities: [UserEntity, UserRoleEntity, RoleEntity, AreaEntity, SubareaEntity, AplicationEntity,CurrencyEntity,DocumentTypeEntity],
       synchronize: true,
       logging: true,
     }),
@@ -40,6 +44,8 @@ const ENV = process.env.NODE_ENV;
     AreaModule,
     SubareaModule,
     AplicationModule,
+    CurencyModule,
+    DocumentTypeModule
   ],
   controllers: [],
   providers: [],
