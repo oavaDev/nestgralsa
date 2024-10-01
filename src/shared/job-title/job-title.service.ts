@@ -10,6 +10,6 @@ export class JobTitleService {
         private readonly jobTitleRepository: Repository<JobTitleEntity>,
     ) {}
     async findAll(): Promise<JobTitleEntity[]> {
-        return this.jobTitleRepository.find();
+        return this.jobTitleRepository.find({relations: ['area']});
     }
 }
