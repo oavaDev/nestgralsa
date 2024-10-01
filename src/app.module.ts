@@ -18,6 +18,12 @@ import { CurencyModule } from './planning/contracts/curency/curency.module';
 import {CurrencyEntity} from "./planning/contracts/curency/entities/currency.entity";
 import {DocumentTypeEntity} from "./planning/contracts/document_type/entities/document-type.entity";
 import {DocumentTypeModule} from "./planning/contracts/document_type/document-type.module";
+import { JobTitleModule } from './shared/job-title/job-title.module';
+import {JobTitleEntity} from "./shared/job-title/entities/job-title.entity";
+import { ManagementLevelModule } from './planning/contracts/management-level/management-level.module';
+import { CriticalityLevelModule } from './planning/contracts/criticality-level/criticality-level.module';
+import {ManagementLevelEntity} from "./planning/contracts/management-level/entities/management-level.entity";
+import {CriticallityLevelEntity} from "./planning/contracts/criticality-level/entities/criticallity-level.entity";
 
 const ENV = process.env.NODE_ENV;
 @Module({
@@ -33,7 +39,7 @@ const ENV = process.env.NODE_ENV;
       username : process.env.POSTGRES_USER,
       password : process.env.POSTGRES_PASSWORD,
       database : process.env.POSTGRES_DB,
-      entities: [UserEntity, UserRoleEntity, RoleEntity, AreaEntity, SubareaEntity, AplicationEntity,CurrencyEntity,DocumentTypeEntity],
+      entities: [UserEntity, UserRoleEntity, RoleEntity, AreaEntity, SubareaEntity, AplicationEntity,CurrencyEntity,DocumentTypeEntity,JobTitleEntity,ManagementLevelEntity,CriticallityLevelEntity],
       synchronize: true,
       logging: true,
     }),
@@ -45,7 +51,10 @@ const ENV = process.env.NODE_ENV;
     SubareaModule,
     AplicationModule,
     CurencyModule,
-    DocumentTypeModule
+    DocumentTypeModule,
+    JobTitleModule,
+    ManagementLevelModule,
+    CriticalityLevelModule
   ],
   controllers: [],
   providers: [],
