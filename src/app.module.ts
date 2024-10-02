@@ -24,6 +24,9 @@ import { ManagementLevelModule } from './planning/contracts/management-level/man
 import { CriticalityLevelModule } from './planning/contracts/criticality-level/criticality-level.module';
 import {ManagementLevelEntity} from "./planning/contracts/management-level/entities/management-level.entity";
 import {CriticallityLevelEntity} from "./planning/contracts/criticality-level/entities/criticallity-level.entity";
+import { ContractModule } from './planning/contracts/contract/contract.module';
+import {ContractEntity} from "./planning/contracts/contract/entities/contract.entity";
+import { ContractFileModule } from './planning/contracts/contract-file/contract-file.module';
 
 const ENV = process.env.NODE_ENV;
 @Module({
@@ -39,7 +42,20 @@ const ENV = process.env.NODE_ENV;
       username : process.env.POSTGRES_USER,
       password : process.env.POSTGRES_PASSWORD,
       database : process.env.POSTGRES_DB,
-      entities: [UserEntity, UserRoleEntity, RoleEntity, AreaEntity, SubareaEntity, AplicationEntity,CurrencyEntity,DocumentTypeEntity,JobTitleEntity,ManagementLevelEntity,CriticallityLevelEntity],
+      entities: [
+        UserEntity,
+        UserRoleEntity,
+        RoleEntity,
+        AreaEntity,
+        SubareaEntity,
+        AplicationEntity,
+        CurrencyEntity,
+        DocumentTypeEntity,
+        JobTitleEntity,
+        ManagementLevelEntity,
+        CriticallityLevelEntity,
+        ContractEntity
+      ],
       synchronize: true,
       logging: true,
     }),
@@ -54,7 +70,9 @@ const ENV = process.env.NODE_ENV;
     DocumentTypeModule,
     JobTitleModule,
     ManagementLevelModule,
-    CriticalityLevelModule
+    CriticalityLevelModule,
+    ContractModule,
+    ContractFileModule
   ],
   controllers: [],
   providers: [],
