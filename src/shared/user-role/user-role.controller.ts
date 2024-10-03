@@ -7,9 +7,9 @@ import {createResponse} from "../../utils/shared/response.util";
 export class UserRoleController {
   constructor(private readonly userRoleService: UserRoleService) {}
   @Get()
-  getAllUserRoles() {
+  async getAllUserRoles() {
     try {
-      return createResponse(this.userRoleService.getAllUserRoles(), "Roles de usuario obtenidos con éxito", 200);
+      return createResponse(await this.userRoleService.getAllUserRoles(), "Roles de usuario obtenidos con éxito", 200);
     }catch (e) {
       return createResponse([], "Error al obtener los roles de usuario", 500);
     }
