@@ -5,6 +5,8 @@ import {CurrencyEntity} from "../../curency/entities/currency.entity";
 import {AreaEntity} from "../../../../shared/area/entities/area.entity";
 import {CriticallityLevelEntity} from "../../criticality-level/entities/criticallity-level.entity";
 import {ManagementLevelEntity} from "../../management-level/entities/management-level.entity";
+import {ContractFileEntity} from "../../contract-file/entities/contract-file.entity";
+import {ContractFileWBufferDto} from "../../contract-file/dto/contract-file-w-buffer.dto";
 
 @Entity('contract_entity')
 export class ContractEntity {
@@ -105,4 +107,6 @@ export class ContractEntity {
         nullable: true
     })
     observations: string;
+    @OneToMany(() => ContractFileEntity, contractFile => contractFile.contract)
+    files: ContractFileWBufferDto[];
 }

@@ -27,6 +27,7 @@ import {CriticallityLevelEntity} from "./planning/contracts/criticality-level/en
 import { ContractModule } from './planning/contracts/contract/contract.module';
 import {ContractEntity} from "./planning/contracts/contract/entities/contract.entity";
 import { ContractFileModule } from './planning/contracts/contract-file/contract-file.module';
+import {ContractFileEntity} from "./planning/contracts/contract-file/entities/contract-file.entity";
 
 const ENV = process.env.NODE_ENV;
 @Module({
@@ -54,7 +55,8 @@ const ENV = process.env.NODE_ENV;
         JobTitleEntity,
         ManagementLevelEntity,
         CriticallityLevelEntity,
-        ContractEntity
+        ContractEntity,
+        ContractFileEntity
       ],
       synchronize: true,
       logging: true,

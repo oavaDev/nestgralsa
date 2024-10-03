@@ -26,7 +26,9 @@ export class ContractService {
         private readonly managementLevelRepository: Repository<ManagementLevelEntity>,
     ) {}
     async findAll(): Promise<ContractEntity[]> {
-        return await this.contractRepository.find();
+        return await this.contractRepository.find({
+            relations: ['document_type', 'currency', 'area', 'criticallity_level', 'management_level'],
+        });
     }
     async findOne(id: number): Promise<ContractEntity> {
         return await this.contractRepository.findOne({

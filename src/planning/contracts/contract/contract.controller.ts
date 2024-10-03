@@ -4,6 +4,9 @@ import {ApiBearerAuth, ApiProperty, ApiTags} from "@nestjs/swagger";
 import {ContractEntity} from "./entities/contract.entity";
 import {JwtAuthGuard} from "../../../security/authentication/guards/jwt.guard";
 import {CreateContractDto} from "./dto/create-contract.dto";
+import {ContractFileEntity} from "../contract-file/entities/contract-file.entity";
+import {ResponseEntity} from "../../../shared/entity/response.entity";
+import {createResponse} from "../../../utils/shared/response.util";
 
 @Controller('contract')
 @ApiTags('contract')
@@ -17,7 +20,6 @@ export class ContractController {
   }
   @Get(':id')
   async findOne(@Param('id') id: number): Promise<ContractEntity> {
-    console.log(id)
     return await this.contractService.findOne(id);
   }
   @Post()
@@ -25,8 +27,8 @@ export class ContractController {
     description: 'Identificador del área a la que pertenece la subárea',
     example: 1,
   })
-  async create(@Body() contract: CreateContractDto): Promise<ContractEntity> {
-      console.log(contract)
-      return await this.contractService.create(contract);
+  async create(@Body() contract: CreateContractDto): Promise<ResponseEntity> {
+      const data = await this.contractService.create(contract);
+      return createResponse(data, "Contrato creado con éxito", 201);
   }
 }
