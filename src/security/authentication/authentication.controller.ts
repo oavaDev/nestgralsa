@@ -14,7 +14,11 @@ export class AuthenticationController {
     @Post('login')
     @UseGuards(LocalGuard)
     async login(@Body() authLoginDto: AuthLoginDto) {
-        return await this.authenticationService.login(authLoginDto);
+        try {
+            return createResponse(await this.authenticationService.login(authLoginDto), "Usuario logueado con éxito", 200);
+        }catch (e){
+            return createResponse([], "Error al loguear el usuario", 401);
+        }
     }
     @Patch('change-password')
     @ApiOperation({ summary: 'Change password'})
