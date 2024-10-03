@@ -16,7 +16,7 @@ export class AreaEntity {
         example: 'Administración',
     })
     @Column()
-    descripcion: string;
+    description: string;
 
     @OneToMany(() => SubareaEntity, (subarea) => subarea.area)
     subarea: SubareaEntity[];

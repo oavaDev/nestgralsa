@@ -16,7 +16,7 @@ export class JobTitleEntity {
         example: 'Analista IT',
     })
     @Column()
-    descripcion: string;
+    description: string;
     @ManyToOne(() => AreaEntity, area => area.id)
     area: number;
 }
