@@ -7,11 +7,12 @@ import {
 } from '@nestjs/common';
 import { ContractFileService } from './contract-file.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import {ApiBody, ApiConsumes, ApiTags} from "@nestjs/swagger";
+import {ApiBody, ApiConsumes, ApiProperty, ApiTags} from "@nestjs/swagger";
 import {CreateContractFileDto} from "./dto/create-contract-file.dto";
 import {ContractFileEntity} from "./entities/contract-file.entity";
 import {ContractFileWBufferDto} from "./dto/contract-file-w-buffer.dto";
 import {Response} from 'express';
+import {createResponse} from "../../../utils/shared/response.util";
 @Controller('contract-file')
 @ApiTags('contract-file')
 export class ContractFileController {
@@ -20,12 +21,18 @@ export class ContractFileController {
   async getFilesForContract(@Param('id') contractId: number): Promise<ContractFileWBufferDto[]> {
     return await this.contractFileService.getFilesByContract(contractId);
   }
-  @Get('files/:fileId')
+  @Get('download/file/:fileId')
   async downloadFile(
     @Param('fileId') fileId: number,
     @Res() res: Response,  // Use Express Response object for streaming
-  ): Promise<void> {
+  ): Promise<any> {
     return this.contractFileService.downloadFile(fileId, res);
+    try {
+        const data = await this.contractFileService.downloadFile(fileId, res);
+        return createResponse(data, "Archivo descargado con éxito", 200);
+    }catch (error){
+        return createResponse([], "Error al descargar el archivo", 500);
+    }
   }
   @Post('upload')
   @ApiConsumes('multipart/form-data')
@@ -54,6 +61,11 @@ export class ContractFileController {
                       errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY
                     }),
             ) file: Express.Multer.File){
-    await this.contractFileService.uploadFile(data, file);
+      try {
+          await this.contractFileService.uploadFile(data, file);
+          return createResponse(data, "Contrato guardado con éxito", 201);
+      }catch (error){
+          return createResponse([], "Error al subir el archivo", 500);
+      }
   }
 }
