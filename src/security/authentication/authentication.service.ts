@@ -68,9 +68,7 @@ export class AuthenticationService {
         if (existingUser) {
             return 'User already exists';
         }
-        console.log(user)
         user.password = await generateHashedPassword(user.password);
-        console.log(user.password)
         return await this.userService.create(user);
     }
 

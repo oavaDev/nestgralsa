@@ -2,20 +2,21 @@ import {
     Body,
     Controller, Get, HttpStatus, Param, ParseFilePipeBuilder,
     Post, Res,
-    UploadedFile,
+    UploadedFile, UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
 import { ContractFileService } from './contract-file.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import {ApiBody, ApiConsumes, ApiProperty, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiBody, ApiConsumes, ApiTags} from "@nestjs/swagger";
 import {CreateContractFileDto} from "./dto/create-contract-file.dto";
-import {ContractFileEntity} from "./entities/contract-file.entity";
-import {ContractFileWBufferDto} from "./dto/contract-file-w-buffer.dto";
 import {Response} from 'express';
 import {createResponse} from "../../../utils/shared/response.util";
 import {ResponseEntity} from "../../../shared/entity/response.entity";
-@Controller('contract-file')
+import {JwtAuthGuard} from "../../../security/authentication/guards/jwt.guard";
 @ApiTags('contract-file')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+@Controller('contract-file')
 export class ContractFileController {
   constructor(private readonly contractFileService: ContractFileService) {}
   @Get(':id/files')

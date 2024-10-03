@@ -1,18 +1,16 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, UseGuards} from '@nestjs/common';
+import {Controller, Get,Param, UseGuards} from '@nestjs/common';
 import { UserService } from './user.service';
-import { UpdateUserDto } from './dto/update-user.dto';
 import {JwtAuthGuard} from "../../security/authentication/guards/jwt.guard"
 import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
-import {AuthChangePasswordDTO} from "../../security/authentication/interfaces/authChangePassword.entity";
 import {createResponse} from "../../utils/shared/response.util";
 @ApiTags('user')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   async findAll() {
     try {
       const data = await this.userService.findAll();
@@ -30,8 +28,6 @@ export class UserController {
     }
   }
   @Get(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   async findOne(@Param('id') id: string) {
     try {
       const data = await this.userService.findByNIde(id);

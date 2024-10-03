@@ -1,10 +1,13 @@
-import {Controller, Get} from '@nestjs/common';
+import {Controller, Get, UseGuards} from '@nestjs/common';
 import { AreaService } from './area.service';
-import {ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 import {createResponse} from "../../utils/shared/response.util";
+import {JwtAuthGuard} from "../../security/authentication/guards/jwt.guard";
 
-@Controller('area')
 @ApiTags('area')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+@Controller('area')
 export class AreaController {
   constructor(private readonly areaService: AreaService) {}
   @Get()

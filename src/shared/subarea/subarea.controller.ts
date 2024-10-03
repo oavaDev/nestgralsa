@@ -7,12 +7,12 @@ import {JwtAuthGuard} from "../../security/authentication/guards/jwt.guard";
 import {createResponse} from "../../utils/shared/response.util";
 import {ResponseEntity} from "../entity/response.entity";
 @ApiTags('subarea')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('subarea')
 export class SubareaController {
   constructor(private readonly subareaService: SubareaService) {}
   @Get()
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   async getAllSubareas() {
     try {
       return createResponse(await this.subareaService.getAllSubareas(), "Subáreas obtenidas con éxito", 200);
@@ -21,8 +21,6 @@ export class SubareaController {
     }
   }
   @Post()
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @ApiProperty({
     description: 'Identificador del área a la que pertenece la subárea',
     example: 1,

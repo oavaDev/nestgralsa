@@ -1,10 +1,13 @@
-import {Controller, Get, Inject} from '@nestjs/common';
+import {Controller, Get, Inject, UseGuards} from '@nestjs/common';
 import { CurencyService } from './curency.service';
-import {ApiProperty, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiProperty, ApiTags} from "@nestjs/swagger";
 import {createResponse} from "../../../utils/shared/response.util";
+import {JwtAuthGuard} from "../../../security/authentication/guards/jwt.guard";
 
-@Controller('curency')
 @ApiTags('curency')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+@Controller('curency')
 export class CurencyController {
   constructor(
     private readonly curencyService: CurencyService

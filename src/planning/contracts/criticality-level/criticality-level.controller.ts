@@ -1,10 +1,13 @@
-import {Controller, Get} from '@nestjs/common';
+import {Controller, Get, UseGuards} from '@nestjs/common';
 import { CriticalityLevelService } from './criticality-level.service';
-import {ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 import {createResponse} from "../../../utils/shared/response.util";
+import {JwtAuthGuard} from "../../../security/authentication/guards/jwt.guard";
 
-@Controller('criticality-level')
 @ApiTags('criticality-level')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+@Controller('criticality-level')
 export class CriticalityLevelController {
   constructor(private readonly criticalityLevelService: CriticalityLevelService) {}
   @Get()

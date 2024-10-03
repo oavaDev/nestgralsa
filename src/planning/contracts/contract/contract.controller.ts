@@ -8,10 +8,10 @@ import {ContractFileEntity} from "../contract-file/entities/contract-file.entity
 import {ResponseEntity} from "../../../shared/entity/response.entity";
 import {createResponse} from "../../../utils/shared/response.util";
 
-@Controller('contract')
 @ApiTags('contract')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
+@Controller('contract')
 export class ContractController {
   constructor(private readonly contractService: ContractService) {}
   @Get()

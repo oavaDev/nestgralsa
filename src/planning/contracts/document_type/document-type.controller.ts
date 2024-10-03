@@ -1,10 +1,13 @@
-import {Controller, Get, Inject} from '@nestjs/common';
+import {Controller, Get, Inject, UseGuards} from '@nestjs/common';
 import { DocumentTypeService } from './document-type.service';
-import {ApiProperty, ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiProperty, ApiTags} from "@nestjs/swagger";
 import {createResponse} from "../../../utils/shared/response.util";
+import {JwtAuthGuard} from "../../../security/authentication/guards/jwt.guard";
 
-@Controller('document-type')
 @ApiTags('document-type')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+@Controller('document-type')
 export class DocumentTypeController {
   constructor(
     private readonly documentTypeService: DocumentTypeService

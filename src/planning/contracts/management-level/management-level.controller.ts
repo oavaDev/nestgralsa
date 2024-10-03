@@ -1,9 +1,12 @@
-import {Controller, Get} from '@nestjs/common';
+import {Controller, Get, UseGuards} from '@nestjs/common';
 import { ManagementLevelService } from './management-level.service';
-import {ApiTags} from "@nestjs/swagger";
+import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
+import {JwtAuthGuard} from "../../../security/authentication/guards/jwt.guard";
 
-@Controller('management-level')
 @ApiTags('management-level')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
+@Controller('management-level')
 export class ManagementLevelController {
   constructor(private readonly managementLevelService: ManagementLevelService) {}
   @Get()
