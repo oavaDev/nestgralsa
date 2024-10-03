@@ -4,6 +4,8 @@ import {CreateSubareaDto} from "./dto/subarea.dto";
 import {SubareaEntity} from "./entities/subarea.entity";
 import {ApiBearerAuth, ApiProperty, ApiTags} from "@nestjs/swagger";
 import {JwtAuthGuard} from "../../security/authentication/guards/jwt.guard";
+import {createResponse} from "../../utils/shared/response.util";
+import {ResponseEntity} from "../entity/response.entity";
 @ApiTags('subarea')
 @Controller('subarea')
 export class SubareaController {
@@ -12,7 +14,11 @@ export class SubareaController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   async getAllSubareas() {
-      return this.subareaService.getAllSubareas();
+    try {
+      return createResponse(await this.subareaService.getAllSubareas(), "Subáreas obtenidas con éxito", 200);
+    }catch (e){
+      return createResponse([], "Error al obtener las subáreas", 500);
+    }
   }
   @Post()
   @ApiBearerAuth()
@@ -21,7 +27,11 @@ export class SubareaController {
     description: 'Identificador del área a la que pertenece la subárea',
     example: 1,
   })
-  async createSubarea(@Body() subarea : CreateSubareaDto): Promise<SubareaEntity> {
-      return await this.subareaService.create(subarea);
+  async createSubarea(@Body() subarea : CreateSubareaDto): Promise<ResponseEntity> {
+    try {
+      return createResponse(await this.subareaService.create(subarea), "Subárea creada con éxito", 200);
+    }catch (e){
+      return createResponse([], "Error al crear la subárea", 500);
+    }
   }
 }

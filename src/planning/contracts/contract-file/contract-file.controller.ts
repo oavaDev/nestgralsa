@@ -13,13 +13,18 @@ import {ContractFileEntity} from "./entities/contract-file.entity";
 import {ContractFileWBufferDto} from "./dto/contract-file-w-buffer.dto";
 import {Response} from 'express';
 import {createResponse} from "../../../utils/shared/response.util";
+import {ResponseEntity} from "../../../shared/entity/response.entity";
 @Controller('contract-file')
 @ApiTags('contract-file')
 export class ContractFileController {
   constructor(private readonly contractFileService: ContractFileService) {}
   @Get(':id/files')
-  async getFilesForContract(@Param('id') contractId: number): Promise<ContractFileWBufferDto[]> {
-    return await this.contractFileService.getFilesByContract(contractId);
+  async getFilesForContract(@Param('id') contractId: number): Promise<ResponseEntity> {
+      try {
+          return createResponse(await this.contractFileService.getFilesByContract(contractId), "Archivos obtenidos con éxito", 200);
+      }catch (e){
+          return createResponse([], "Error al obtener los archivos", 500);
+      }
   }
   @Get('download/file/:fileId')
   async downloadFile(
@@ -27,12 +32,6 @@ export class ContractFileController {
     @Res() res: Response,  // Use Express Response object for streaming
   ): Promise<any> {
     return this.contractFileService.downloadFile(fileId, res);
-    try {
-        const data = await this.contractFileService.downloadFile(fileId, res);
-        return createResponse(data, "Archivo descargado con éxito", 200);
-    }catch (error){
-        return createResponse([], "Error al descargar el archivo", 500);
-    }
   }
   @Post('upload')
   @ApiConsumes('multipart/form-data')
