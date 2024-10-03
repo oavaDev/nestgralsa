@@ -16,11 +16,19 @@ export class ContractController {
   constructor(private readonly contractService: ContractService) {}
   @Get()
   async findAll() {
-      return await this.contractService.findAll();
+      try {
+        return createResponse(await this.contractService.findAll(), "Contratos encontrados", 200);
+      }catch (e) {
+        return createResponse(null, "Error al buscar los contratos", 500);
+      }
   }
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<ContractEntity> {
-    return await this.contractService.findOne(id);
+  async findOne(@Param('id') id: number): Promise<ResponseEntity> {
+    try {
+      return createResponse(await this.contractService.findOne(id), "Contrato encontrado", 200);
+    }catch (e) {
+      return createResponse(null, "Error al buscar el contrato", 500);
+    }
   }
   @Post()
   @ApiProperty({
