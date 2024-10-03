@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import {JwtAuthGuard} from "../../security/authentication/guards/jwt.guard"
 import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 import {AuthChangePasswordDTO} from "../../security/authentication/interfaces/authChangePassword.entity";
+import {createResponse} from "../../utils/shared/response.util";
 @ApiTags('user')
 @Controller('user')
 export class UserController {
@@ -35,64 +36,12 @@ export class UserController {
     try {
       const data = await this.userService.findByNIde(id);
       if (data){
-        return {
-          message: 'Usuario encontrado',
-          data: data,
-          success: true,
-        };
+        return createResponse(data, 'Usuario encontrado', 200);
       }else{
-        return {
-          message: 'No se encontró el usuario',
-          data: data,
-          success: true,
-        };
+        return createResponse({}, 'Usuario no encontrado', 404);
       }
     }catch (error){
-      return {
-        message: 'Error al obtener el usuario',
-        error: error.message,
-        success: false,
-      }
+        return createResponse({}, 'Error al obtener el usuario', 500);
     }
   }
-/*  @Patch(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  async update(
-      @Param('id') id: string,
-      @Body() updateUserDto: UpdateUserDto,
-  ) {
-    try {
-      await this.userService.update(
-          id,
-          updateUserDto,
-      );
-      return {
-        success: true,
-        message: 'UserRoleEntity Updated Successfully',
-      };
-    } catch (error) {
-      return {
-        success: false,
-        message: error.message,
-      };
-    }
-  }
-  @Delete(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  async remove(@Param('id') id: string) {
-    try {
-      await this.userService.remove(id);
-      return {
-        success: true,
-        message: 'UserRoleEntity Deleted Successfully',
-      };
-    } catch (error) {
-      return {
-        success: false,
-        message: error.message,
-      };
-    }
-  }*/
 }
