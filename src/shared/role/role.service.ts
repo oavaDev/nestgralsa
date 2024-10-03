@@ -23,6 +23,6 @@ export class RoleService {
         })
     }
     async create(role : CreateRoleDto) : Promise<RoleEntity> {
-        return this.roleRepository.create(role)
+        return await this.roleRepository.save(role);
     }
 }

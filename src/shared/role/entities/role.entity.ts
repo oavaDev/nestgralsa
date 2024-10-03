@@ -43,7 +43,33 @@ export class RoleEntity {
 
     @ApiProperty({
         description: 'Menú asociado al rol (JSON)',
-        example: '{"items": ["Dashboard", "Settings"]}',
+        example: '[\n' +
+            '  {\n' +
+            '    "linkText": "Inicio",\n' +
+            '    "parentLink": "/",\n' +
+            '    "menu": false,\n' +
+            '    "iconClass": "home",\n' +
+            '    "submenu": []\n' +
+            '  },\n' +
+            '  {\n' +
+            '    "linkText": "Planeacion",\n' +
+            '    "parentLink": "",\n' +
+            '    "menu": false,\n' +
+            '    "iconClass": "dashboard",\n' +
+            '    "submenu": [\n' +
+            '      {\n' +
+            '        "childtext": "Contratos",\n' +
+            '        "link": "",\n' +
+            '        "submenuItems": [\n' +
+            '          {\n' +
+            '            "childtext": "Visualizar",\n' +
+            '            "link": "/contracts"\n' +
+            '          }\n' +
+            '        ]\n' +
+            '      }\n' +
+            '    ]\n' +
+            '  }\n' +
+            ']',
     })
     @Column({ type: 'json' })
     menu: any;
