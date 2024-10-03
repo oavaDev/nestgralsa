@@ -6,6 +6,7 @@ import { LocalGuard } from './guards/local.guard';
 import {ApiBearerAuth, ApiOperation, ApiProperty, ApiTags} from "@nestjs/swagger";
 import {JwtAuthGuard} from "./guards/jwt.guard";
 import {AuthChangePasswordDTO} from "./interfaces/authChangePassword.entity";
+import {createResponse} from "../../utils/shared/response.util";
 @ApiTags('auth')
 @Controller('auth')
 export class AuthenticationController {
@@ -21,14 +22,30 @@ export class AuthenticationController {
     @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     async changePassword(@Body() authChangePasswordDTO: AuthChangePasswordDTO) {
-        return await this.authenticationService.changePassword(authChangePasswordDTO);
+        try {
+            const user = await this.authenticationService.changePassword(authChangePasswordDTO);
+            return createResponse(user, "Contraseña cambiada con éxito", 200);
+        }catch (e){
+            return createResponse([], "Error al cambiar la contraseña", 500);
+        }
     }
     @Post('register')
     async register(@Body() authRegisterDto: AuthRegisterDto) {
-        return await this.authenticationService.register(authRegisterDto);
+        try {
+            const user = await this.authenticationService.register(authRegisterDto);
+            return createResponse(user, "Usuario creado con éxito", 201);
+        }catch (e){
+            return createResponse([], "Error al crear el usuario", 500);
+        }
     }
     @Post('validate')
     async validate(@Body() authLoginDto: AuthLoginDto) {
-        return await this.authenticationService.validate(authLoginDto);
+        try {
+            const user = await this.authenticationService.validate(authLoginDto);
+            return createResponse(user, "Usuario validado con éxito", 200);
+        }
+        catch (e){
+            return createResponse([], "Error al validar el usuario", 500);
+        }
     }
 }
