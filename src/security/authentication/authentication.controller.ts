@@ -33,6 +33,8 @@ export class AuthenticationController {
             return createResponse([], "Error al cambiar la contraseña", 500);
         }
     }
+    @ApiBearerAuth()
+    @UseGuards(JwtAuthGuard)
     @Post('register')
     async register(@Body() authRegisterDto: AuthRegisterDto) {
         try {
