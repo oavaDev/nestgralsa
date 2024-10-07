@@ -4,10 +4,10 @@ import {ApiBearerAuth, ApiProperty, ApiTags} from "@nestjs/swagger";
 import {createResponse} from "../../../utils/shared/response.util";
 import {JwtAuthGuard} from "../../../security/authentication/guards/jwt.guard";
 
-@ApiTags('curency')
+@ApiTags('currency')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
-@Controller('curency')
+@Controller('currency')
 export class CurencyController {
   constructor(
     private readonly curencyService: CurencyService
@@ -16,9 +16,10 @@ export class CurencyController {
   @Get()
   async getCurrency() {
     try {
-      createResponse(this.curencyService.findAll(), "Monedas encontradas", 200);
+      const response = await this.curencyService.findAll();
+      return createResponse(response, "Monedas encontradas", 200);
     }catch (e) {
-      createResponse([], "Error encontrando monedas", 500);
+      return createResponse([], "Error encontrando monedas", 500);
     }
   }
 }

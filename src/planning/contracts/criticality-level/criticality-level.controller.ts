@@ -4,10 +4,10 @@ import {ApiBearerAuth, ApiTags} from "@nestjs/swagger";
 import {createResponse} from "../../../utils/shared/response.util";
 import {JwtAuthGuard} from "../../../security/authentication/guards/jwt.guard";
 
-@ApiTags('criticality-level')
+@ApiTags('criticallity-level')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
-@Controller('criticality-level')
+@Controller('criticallity-level')
 export class CriticalityLevelController {
   constructor(private readonly criticalityLevelService: CriticalityLevelService) {}
   @Get()
