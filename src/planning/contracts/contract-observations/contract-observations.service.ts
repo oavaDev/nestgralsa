@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {ContractObservationsEntity} from "./entities/contract-observations.entity";
 import {InjectRepository} from "@nestjs/typeorm";
+import {SaveContractObservationDto} from "./dto/SaveContractObservation.dto";
 
 @Injectable()
 export class ContractObservationsService {
@@ -18,5 +19,14 @@ export class ContractObservationsService {
             },
         });
     }
-
+    async createContractObservation(contractObservation: SaveContractObservationDto) {
+        let contractObs = new ContractObservationsEntity();
+        contractObs.description = contractObservation.description;
+        contractObs.user_id = contractObservation.user_id;
+        contractObs.uploaded_on = contractObservation.uploaded_on;
+        contractObs.contract = {
+            id: contractObservation.contract_id,
+        };
+        return await this.contractObservationsRepository.save(contractObs);
+    }
 }

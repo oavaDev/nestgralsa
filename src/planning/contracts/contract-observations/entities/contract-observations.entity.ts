@@ -18,7 +18,12 @@ export class ContractObservationsEntity {
     })
     @Column()
     description: string;
-
+    @ApiProperty({
+        description: 'Id del usuario que subió el comentario',
+        example: '111111111',
+    })
+    @Column()
+    user_id: number;
     @ApiProperty({
         description: 'Fecha del comentario',
         example: '01/01/2024',
@@ -27,12 +32,6 @@ export class ContractObservationsEntity {
         default: () => 'CURRENT_TIMESTAMP',
     })
     uploaded_on: Date;
-    @ApiProperty({
-        description: 'Fecha de carga del archivo',
-        example: '01/01/2024',
-    })
-    @Column()
-    user_id: number;
     @ManyToOne(() => ContractEntity, contract => contract.observations)
-    contract: ContractEntity;
+    contract: { id: number };
 }
