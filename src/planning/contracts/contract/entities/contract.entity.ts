@@ -7,6 +7,7 @@ import {CriticallityLevelEntity} from "../../criticality-level/entities/critical
 import {ManagementLevelEntity} from "../../management-level/entities/management-level.entity";
 import {ContractFileEntity} from "../../contract-file/entities/contract-file.entity";
 import {ContractFileWBufferDto} from "../../contract-file/dto/contract-file-w-buffer.dto";
+import {ContractObservationsEntity} from "../../contract-observations/entities/contract-observations.entity";
 
 @Entity('contract_entity')
 export class ContractEntity {
@@ -103,10 +104,9 @@ export class ContractEntity {
         description: 'Observaciones',
         example: 'Contrato de prueba',
     })
-    @Column({
-        nullable: true
-    })
+    @OneToMany(() => ContractObservationsEntity, contractObservations => contractObservations.contract)
     observations: string;
     @OneToMany(() => ContractFileEntity, contractFile => contractFile.contract)
     files: ContractFileWBufferDto[];
+
 }

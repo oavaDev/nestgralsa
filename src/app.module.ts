@@ -28,12 +28,17 @@ import { ContractModule } from './planning/contracts/contract/contract.module';
 import {ContractEntity} from "./planning/contracts/contract/entities/contract.entity";
 import { ContractFileModule } from './planning/contracts/contract-file/contract-file.module';
 import {ContractFileEntity} from "./planning/contracts/contract-file/entities/contract-file.entity";
+import { ContractObservationsModule } from './planning/contracts/contract-observations/contract-observations.module';
+import {
+  ContractObservationsEntity
+} from "./planning/contracts/contract-observations/entities/contract-observations.entity";
 
 const ENV = process.env.NODE_ENV;
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ENV ? 'env/.env.development': 'env/.env',
+      envFilePath: 'env/.env.development',
+      /*envFilePath: ENV ? 'env/.env.development': 'env/.env',*/
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({
@@ -56,7 +61,8 @@ const ENV = process.env.NODE_ENV;
         ManagementLevelEntity,
         CriticallityLevelEntity,
         ContractEntity,
-        ContractFileEntity
+        ContractFileEntity,
+        ContractObservationsEntity
       ],
       synchronize: true,
       logging: true,
@@ -74,7 +80,8 @@ const ENV = process.env.NODE_ENV;
     ManagementLevelModule,
     CriticalityLevelModule,
     ContractModule,
-    ContractFileModule
+    ContractFileModule,
+    ContractObservationsModule
   ],
   controllers: [],
   providers: [],
