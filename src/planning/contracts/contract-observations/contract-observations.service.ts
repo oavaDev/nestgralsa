@@ -23,7 +23,8 @@ export class ContractObservationsService {
         let contractObs = new ContractObservationsEntity();
         contractObs.description = contractObservation.description;
         contractObs.user_id = contractObservation.user_id;
-        contractObs.uploaded_on = contractObservation.uploaded_on;
+        contractObs.user = contractObservation.user;
+        contractObs.job_title = contractObservation.job_title;
         contractObs.contract = {
             id: contractObservation.contract_id,
         };

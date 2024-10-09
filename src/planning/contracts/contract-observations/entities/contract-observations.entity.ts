@@ -19,6 +19,20 @@ export class ContractObservationsEntity {
     @Column()
     description: string;
     @ApiProperty({
+        description: 'Nombre del usuario',
+        example: 'Omar Vega',
+    })
+    @Column()
+    user: string;
+    @ApiProperty({
+        description: 'Cargo del usuario',
+        example: 'this.sistems_engineer.getAll()',
+    })
+    @Column({
+        nullable: true,
+    })
+    job_title: string;
+    @ApiProperty({
         description: 'Id del usuario que subió el comentario',
         example: '111111111',
     })

@@ -15,15 +15,20 @@ export class SaveContractObservationDto {
     @IsNotEmpty()
     user_id: number;
     @ApiProperty({
-        description: 'Fecha del comentario',
-        example: '01/01/2024',
-    })
-    @IsNotEmpty()
-    uploaded_on: Date;
-    @ApiProperty({
         description: 'Id del contrato',
         example: '10',
     })
     @IsNotEmpty()
     contract_id: number;
+    @ApiProperty({
+        description: 'Nombre del usuario',
+        example: 'Omar Vega',
+    })
+    @IsNotEmpty()
+    user: string;
+    @ApiProperty({
+        description: 'Cargo del usuario',
+        example: 'this.sistems_engineer.getAll()',
+    })
+    job_title: string;
 }
