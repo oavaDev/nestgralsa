@@ -59,7 +59,6 @@ export class ContractService {
         newContract.management_level = await this.managementLevelRepository.findOne({
             where: { id: contract.management_level },
         });
-        newContract.observations = contract.observations;
         return await this.contractRepository.save(newContract);
     }
 }

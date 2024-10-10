@@ -83,11 +83,4 @@ export class CreateContractDto {
         example: 'Activo',
     })
     status: string;
-
-    @ApiProperty({
-        description: 'Observaciones adicionales sobre el contrato',
-        example: 'El contrato incluye cláusulas especiales de penalización por retraso.',
-    })
-    @IsNotEmpty()
-    observations: string;
 }
